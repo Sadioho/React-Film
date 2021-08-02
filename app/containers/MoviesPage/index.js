@@ -22,9 +22,10 @@ import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { Skeleton } from '@material-ui/lab';
+import _debounce from 'lodash/debounce';
 import _map from 'lodash/map';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -48,7 +49,6 @@ import {
   makeSelectMoviesData,
   makeSelectStatusFlags,
 } from './selectors';
-
 const useStyles = makeStyles({
   bgHome: {
     fontFamily: '"Helvetica Neue","Helvetica","Arial","sans-serif"',
@@ -127,11 +127,8 @@ export function MoviesPage(props) {
   useInjectReducer({ key: 'moviesPage', reducer });
   useInjectSaga({ key: 'moviesPage', saga });
   const [numberPage, setNumberPage] = useState(2);
-  const classes = useStyles({
-    backgroundImage: `https://image.tmdb.org/t/p/w1280${
-      detailMovie.backdrop_path
-    }`,
-  });
+
+  const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = idMovie => {
@@ -149,8 +146,12 @@ export function MoviesPage(props) {
     triggerDataNewMovie(numberPage);
   };
 
+  const sendQuery = query => triggerFindDataMovie(query);
+  // const delayedQuery = useRef(_debounce(q => sendQuery(q), 500)).current;
+  const delayedQuery = useCallback(_debounce(q => sendQuery(q), 500), []);
+
   const handleOnChange = e => {
-    triggerFindDataMovie(e.target.value);
+    delayedQuery(e.target.value);
   };
 
   useEffect(() => {
@@ -159,7 +160,7 @@ export function MoviesPage(props) {
 
   return (
     <Container maxWidth="xl" className={classes.bgHome}>
-      <Grid item md={6} sm={12} p={2}>
+      <Grid item md={6} sm={12}>
         <Typography variant="h3">Phim Việt Nam</Typography>
         <Typography>
           Điện ảnh Hàn Quốc đang nở rộ ở khắp các thể loại. Cho dù bạn đang muốn
@@ -182,12 +183,7 @@ export function MoviesPage(props) {
           <Grid container wrap="wrap" spacing={2}>
             {statusFlags.isCallAPILoading ? (
               Array.from(new Array(20)).map((item, index) => (
-                <Grid
-                  key={(() => `${index}`)()}
-                  // className={classes.boxSkeleton}
-                  xs={2}
-                  item
-                >
+                <Grid key={(() => `${index}`)()} xs={2} item>
                   <Skeleton
                     height={300}
                     variant="rect"
@@ -214,11 +210,9 @@ export function MoviesPage(props) {
                       md={2}
                       onClick={() => handleClickOpen(item.id)}
                       key={item.id}
-                      spacing={2}
-                      // className={classes.boxSkeleton}
                     >
                       <img
-                        style={{ width: '100%',height:398 }}
+                        style={{ width: '100%', height: 398 }}
                         alt={item.original_title}
                         src={
                           item.poster_path !== null

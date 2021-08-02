@@ -84,10 +84,10 @@ function* callApiNewMovies(page) {
   }
 }
 
-function* findMovie(payload) {
-  if (payload.payload.length > 0) {
+function* findMovie(param) {
+  if (param.data) {
     try {
-      const response = yield call(getFindMovie, payload.payload);
+      const response = yield call(getFindMovie, param.data);
       const data = _get(response, 'data.results', []);
       yield put(getDataMovieSuccess(data));
     } catch (error) {

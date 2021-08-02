@@ -37,7 +37,7 @@ const moviesPageReducer = (state = initialState, action) =>
         break;
       case GET_DATA_MOVIE_SUCCESS:
         draft.statusFlags.isCallAPILoading = false;
-        draft.dataMovies = action.payload;
+        draft.dataMovies = action.payload; 
         break;
       case GET_DATA_MOVIE_ERROR:
         draft.statusFlags.isCallAPILoading = false;

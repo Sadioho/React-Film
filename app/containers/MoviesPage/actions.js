@@ -86,9 +86,9 @@ export function getDataMoviesNewError(error) {
   };
 }
 
-export function findDataMoive(payload) {
+export function findDataMoive(data) {
   return {
     type: FIND_DATA_MOVIE,
-    payload,
+    data,
   };
 }
