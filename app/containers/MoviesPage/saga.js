@@ -15,40 +15,40 @@ import {
   getDataMoviesNewSuccess,
   getDataMoviesNewError,
 } from './actions';
+import { API_KEY, API_URL } from '../../helper/config';
 // Individual exports for testing
 export function fetchMovies() {
   return axios({
     method: 'GET',
-    url:
-      'https://api.themoviedb.org/3/movie/popular?api_key=844dba0bfd8f3a4f3799f6130ef9e335&language=en-US&page=1',
+    url: `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
   });
 }
 
 export function fetchNewMovies(page) {
   return axios({
     method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/popular?api_key=844dba0bfd8f3a4f3799f6130ef9e335&language=en-US&page=${page}`,
+    url: `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`,
   });
 }
 
 export function dataMovie(id) {
   return axios({
     method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/${id}?api_key=844dba0bfd8f3a4f3799f6130ef9e335&language=en-US`,
+    url: `${API_URL}/movie/${id}?api_key=${API_KEY}&language=en-US`,
   });
 }
 
 export function dataActor(id) {
   return axios({
     method: 'GET',
-    url: `https://api.themoviedb.org/3/movie/${id}/credits?api_key=844dba0bfd8f3a4f3799f6130ef9e335&language=en-US`,
+    url: `${API_URL}/movie/${id}/credits?api_key=${API_KEY}&language=en-US`,
   });
 }
 
 export function getFindMovie(data) {
   return axios({
     method: 'GET',
-    url: `https://api.themoviedb.org/3/search/movie?api_key=844dba0bfd8f3a4f3799f6130ef9e335&language=en-US&query=${data}`,
+    url: `${API_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${data}`,
   });
 }
 

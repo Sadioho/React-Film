@@ -34,6 +34,7 @@ import 'slick-carousel/slick/slick.css';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import CardDetail from '../../components/CardDetail';
+import { BACKDROP_SIZE, IMAGE_BASE_URL } from '../../helper/config';
 import {
   findDataMoive,
   getDataMovies,
@@ -216,9 +217,7 @@ export function MoviesPage(props) {
                         alt={item.original_title}
                         src={
                           item.poster_path !== null
-                            ? `https://image.tmdb.org/t/p/w500${
-                                item.poster_path
-                              }`
+                            ? `${IMAGE_BASE_URL}w500${item.poster_path}`
                             : 'https://www.techmadeplain.com/img/2014/300x200.png'
                         }
                       />
@@ -279,7 +278,7 @@ export function MoviesPage(props) {
               genares={detailMovie.genres.map(item => `  ${item.name}`)}
               overview={detailMovie.overview}
               rating={detailMovie.vote_average}
-              url={`https://image.tmdb.org/t/p/w1280${
+              url={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${
                 detailMovie.backdrop_path
               }`}
             />
@@ -307,9 +306,7 @@ export function MoviesPage(props) {
                       <img
                         src={
                           item.profile_path
-                            ? `https://image.tmdb.org/t/p/w500${
-                                item.profile_path
-                              }`
+                            ? `${IMAGE_BASE_URL}w500${item.profile_path}`
                             : `https://movie-reactjs.web.app/images/no_image.jpg`
                         }
                         alt="kkk"

@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'black',
     padding: '10px 30px',
     alignItems: 'center',
-    
   },
   box: {
     padding: theme.spacing(1),
@@ -20,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary,
     whiteSpace: 'nowrap',
     marginBottom: theme.spacing(1),
-
   },
   end: {
     // width: '100%',
@@ -71,13 +69,6 @@ function Header() {
               </svg>
             </Link>
           </Box>
-        </Grid>
-        <Grid item xs={4} className={classes.end}>
-          <IconButton aria-label="cart" className={classes.colorWhite}>
-            <StyledBadge badgeContent={4} className={classes.colorWhite}>
-              <ShoppingCartIcon />
-            </StyledBadge>
-          </IconButton>
         </Grid>
       </Grid>
     </div>
